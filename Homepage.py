@@ -56,6 +56,7 @@ with st.container():
         st.header("Explore")
         st.write("##")
         st.write("With our powerful machine learning algorithms, you could also try to predict whether a customer will churn or not with you own dataset!")
+        st.write("##")
         uploaded_file = st.file_uploader("Upload your file here")
 
 
