@@ -46,6 +46,27 @@ second_train = pd.read_csv("./Datasets/LP2_Telco-churn-second-2000.csv")
 
 train_df = pd.concat([first_train,second_train])
 
+# Define a dictionary for mapping boolean and None values to more meaningful categories
+new_cat_values_mapping = {
+    'multiple_lines': {True: 'Yes', False: 'No', None: 'No phone service'},
+    'online_security': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'online_backup': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'device_protection': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'tech_support': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'streaming_tv': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'streaming_movies': {True: 'Yes', False: 'No', None: 'No internet service'},
+    'churn': {True: 'Yes', False: 'No', None: 'No'},
+    'partner': {True: 'Yes', False: 'No'},
+    'dependents': {True: 'Yes', False: 'No'},
+    'paperless_billing': {True: 'Yes', False: 'No'},
+    'phone_service': {True: 'Yes', False: 'No'},
+}
+
+# Replace old categories with the new ones
+train_df.replace(new_cat_values_mapping, inplace=True)
+
+
+#create a progress bar to let user know data is loading
 progress_bar = st.progress(0)
 for perc_completed in range(100):
     time.sleep(0.05)
@@ -103,7 +124,7 @@ markdown_table = """
 """
 
 if st.button("Click here "):
-    # Display the markdown table inside the expander
+     # Display the markdown table inside the expander
     st.markdown(markdown_table)
 
 
