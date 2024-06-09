@@ -2,6 +2,8 @@ import streamlit as st
 import pyodbc 
 import pandas as pd
 import time
+from Utils.more_info import markdown_table1
+from Utils.more_info import markdown_table2
 
 st.set_page_config(
     page_title= "Data Hub", layout="wide"
@@ -40,11 +42,32 @@ def get_all_columns():
     df = running_query(sql_query)
     return df
 
-first_train = get_all_columns()
 
-second_train = pd.read_csv("./Datasets/LP2_Telco-churn-second-2000.csv")
+def load_and_concat_datasets(first_dataset_func, second_dataset_path):
+    """
+    Load the first dataset using a provided function and the second dataset from a CSV file,
+    then concatenate them into a single DataFrame.
+    
+    Parameters:
+    - first_dataset_func: function that returns a DataFrame for the first dataset.
+    - second_dataset_path: string path to the second dataset CSV file.
+    
+    Returns:
+    - A concatenated DataFrame containing both datasets.
+    """
+    # Load the first dataset using the provided function
+    first_train = first_dataset_func()
+    
+    # Load the second dataset from the provided CSV file path
+    second_train = pd.read_csv(second_dataset_path)
+    
+    # Concatenate the two DataFrames
+    train_df = pd.concat([first_train, second_train], ignore_index=True)
+    
+    return train_df
 
-train_df = pd.concat([first_train,second_train])
+train_df = load_and_concat_datasets(get_all_columns, "./Datasets/LP2_Telco-churn-second-2000.csv")
+
 
 # Define a dictionary for mapping boolean and None values to more meaningful categories
 new_cat_values_mapping = {
@@ -69,7 +92,7 @@ train_df.replace(new_cat_values_mapping, inplace=True)
 #create a progress bar to let user know data is loading
 progress_bar = st.progress(0)
 for perc_completed in range(100):
-    time.sleep(0.05)
+    time.sleep(0.03)
     progress_bar.progress(perc_completed+1)
 
 st.success("Data loaded successfully!")
@@ -81,51 +104,48 @@ numerics = train_df.select_dtypes("number").columns
 #grouping all categorical columns
 categoricals = train_df.select_dtypes("object").columns
 
-option = st.selectbox(
-    "How would you like to view data?",
-    ("All data", "Numerical columns", "Categorical columns"),
-    index=None,
-    placeholder="Select contact method...",)
+col1,col2 = st.columns(2)
+with col1:
+    option = st.selectbox(
+        "How would you like to view data?",
+        ("All data", "Numerical columns", "Categorical columns"),
+        index=None,
+        placeholder="Select contact method...",)
 # Conditionally display data based on the selected option
 if option == "All data":
     st.write("### All Data")
     st.dataframe(train_df)
+    if st.button("Click here to get more information about data dictionary"):
+        col3,col4 = st.columns(2)
+        with col3:
+        # Display the markdown table inside the expander
+            st.markdown(markdown_table1)
+        with col4:
+            st.markdown(markdown_table2)
 elif option == "Numerical columns":
     st.write("### Numerical Columns")
     st.dataframe(train_df[numerics])
+    if st.button("Click here to get more information about data dictionary"):
+        # Display the markdown table inside the expander
+        col3,col4 = st.columns(2)
+        with col3:
+        # Display the markdown table inside the expander
+            st.markdown(markdown_table1)
+        with col4:
+            st.markdown(markdown_table2)
 elif option == "Categorical columns":
     st.write("### Categorical Columns")
     st.dataframe(train_df[categoricals])
+    if st.button("Click here to get more information about data dictionary"):
+        # Display the markdown table inside the expander
+        col3,col4 = st.columns(2)
+        with col3:
+        # Display the markdown table inside the expander
+            st.markdown(markdown_table1)
+        with col4:
+            st.markdown(markdown_table2)
 
 
-markdown_table = """
-| Column Names|Description| Data Type|
-|-------------|-----------|----------|
-|Gender|Whether the customer is a male or a female|object|
-|SeniorCitizen|Whether a customer is a senior citizen or not|int64|
-|Partner|Whether the customer has a partner or not (Yes, No)|object|
-|Dependents|Whether the customer has dependents or not (Yes, No)|object|
-|Tenure|Number of months the customer has stayed with the company|int64|
-|Phone Service|Whether the customer has a phone service or not (Yes, No)|object|
-|MultipleLines|Whether the customer has multiple lines or not|object|
-|InternetService|Customer's internet service provider (DSL, Fiber Optic, No)|object|
-|OnlineSecurity|Whether the customer has online security or not (Yes, No, No Internet)|object|
-|OnlineBackup|Whether the customer has online backup or not (Yes, No, No Internet)|object|
-|DeviceProtection|Whether the customer has device protection or not (Yes, No, No internet service)|object|
-|TechSupport|Whether the customer has tech support or not (Yes, No, No internet)|object|
-|StreamingTV|Whether the customer has streaming TV or not (Yes, No, No internet service)|object|
-|StreamingMovies|Whether the customer has streaming movies or not (Yes, No, No Internet service)|object|
-|Contract|The contract term of the customer (Month-to-Month, One year, Two year)|object|
-|PaperlessBilling|Whether the customer has paperless billing or not (Yes, No)|object|
-|Payment Method|The customer's payment method (Electronic check, mailed check, Bank transfer(automatic), Credit card(automatic))|object|
-|MonthlyCharges|The amount charged to the customer monthly|float64|
-|TotalCharges|The total amount charged to the customer|float64|
-|Churn|Whether the customer churned or not (Yes or No)|object| 
-"""
-
-if st.button("Click here "):
-     # Display the markdown table inside the expander
-    st.markdown(markdown_table)
 
 
 
