@@ -29,7 +29,7 @@ def init_connection():
 conn = init_connection()
 
 
-@st.cache_data(show_spinner='Loading data, This will only take a minute..')
+@st.cache_data(show_spinner='Loading data....This will only take a minute..')
 def running_query(query):
     with conn.cursor() as c:
         c.execute(query)
@@ -110,7 +110,7 @@ with col1:
         "How would you like to view data?",
         ("All data", "Numerical columns", "Categorical columns"),
         index=None,
-        placeholder="Select contact method...",)
+        placeholder="Select view method...",)
 # Conditionally display data based on the selected option
 if option == "All data":
     st.write("### All Data")
