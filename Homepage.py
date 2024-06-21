@@ -23,7 +23,7 @@ lottie_img = lottie_url("https://lottie.host/80d6a368-c787-4f59-8eca-9b649cf41b1
 lottie_home = lottie_url("https://lottie.host/56f1fdb0-7195-4d5e-ab49-1beb911cc968/GZnG6lXfIu.json")
 
 selected = option_menu(None, options=["Home", "About Us", "Upload"], 
-    icons=['house','gear' 'cloud-upload'], 
+    icons=['house','gear', 'cloud-upload'], 
     menu_icon="cast", default_index=0, orientation="horizontal")
 selected
 #intro talking about title 
