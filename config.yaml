@@ -1,0 +1,24 @@
+credentials:
+  usernames:
+    fljluser:
+      email: florencelaryea88@gmail.com
+      logged_in: False
+      name: Florence Laryea
+      password: selenium2024 # To be replaced with hashed password
+    brkwuser:
+      email: adubrightkwarrteng11@gmail.com
+      logged_in: False
+      name: Guest
+      password: selenium2025 # To be replaced with hashed password
+    gakuuser:
+      email: wolakuma@gmail.com
+      logged_in: False
+      name: Gabriel Kuma
+      password: selenium2026 # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+pre-authorized:
+  emails:
+  - florence.laryea@azubiafrica.org
