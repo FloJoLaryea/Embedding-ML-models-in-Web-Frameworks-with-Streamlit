@@ -4,6 +4,7 @@ import requests
 import json
 from streamlit_lottie import st_lottie
 from streamlit_option_menu import option_menu
+from streamlit_extras.switch_page_button import switch_page
 
 #set page configuration
 st.set_page_config(
@@ -28,19 +29,15 @@ selected = option_menu(None, options=["Home", "About Us", "Upload"],
 selected
 #intro talking about title 
 if selected == "Home":
-    st.title("Unveiling secrets contributing to customer churn")
-    st.write("##")
+    st.markdown("## Welcome to Retention Radar Pro!")
     col,img_col = st.columns(2)
     with col:
-        st.markdown("## Welcome to Retention Radar Pro!")
         st.write("---")
-        st.markdown("""Every company wants to increase its profit or revenue margin and customer retention is one key area industry players 
-             focus their resources - **and we at Selenium Analytics are no different!!**""")
-        st.write("We are leading professionals with a diverse portfolio range⭐⭐⭐⭐⭐")
-        st.write("""
-                 On our page, you can:
-                 - Test our powerful machine learning algorithms to predict a customer churning
-                 - Even include your own dataset""")
+        st.markdown(""" #### Every company wants to increase its profit..and retain its customers  - *and we at Selenium Analytics are no different!!* """)
+        st.markdown("""
+                 #### With our app, you can:
+                 - #### Use our powerful machine learning models to predict customer churn without hassle and in real time
+                 - #### Make data driven decisions effortlessly""")
         
     with img_col:
           st_lottie(
@@ -58,13 +55,13 @@ if selected == "About Us":
     col1, col2 = st.columns(2)
     with col1:
         st.title("About us")
-        st.write("##")
-        st.write("""
-                 Our group of experts in the team operate with the following objectives:
+        st.write("#### We are leading professionals with a diverse portfolio range⭐⭐⭐⭐⭐")
+        st.markdown("""
+                 #### Our group of experts in the team operate with the following objectives:
 
-                 - Explore our clients data thoroughly and decide on the most efficient classification models.
-                 - Find the lifetime value of each customer and know what factors affect the rate at which customers stop using their network.
-                 - Predict if a customer will churn or not.""")
+                 - #### Explore our clients data thoroughly and decide on the most efficient classification models.
+                 - #### Find the lifetime value of each customer and know what factors affect the rate at which customers exit a company.
+                 - #### Predict if a customer will churn or not.""")
     with col2:
         st_lottie(
     lottie_home,
@@ -79,19 +76,16 @@ if selected == "About Us":
 )
 
 if selected == "Upload":
-        st.title("Explore")
-        
+        st.title("Explore?")
         st.markdown("""
-                    ### With our three powerful machine learning algorithms trained with , you could also try to predict 
-                    ### whether a customer will churn or not with you own dataset!""")
-      
-        st.write("We use:")
-        st.markdown("""
-                    -  Catboost
-                    - Logistic Regression
-                    - SQB""")
-        uploaded_file = st.file_uploader("Upload your file here")
-        st.markdown("*Good to remember : Please rename your corresponding columns to match ours*")
-
+                    #### We use our three powerful machine learning algorithms models to predict the risk of churn:
+                    -  ##### Catboost
+                    - ##### Logistic Regression
+                    - ##### SQB
+                    #### Want to try out with your own dataset? Say less!
+                    #### Just upload here in one click!""")
+        data_button = st.button("Upload your data",key="data")
+        if data_button:
+            switch_page("Bulk_Prediction")  
 
 
