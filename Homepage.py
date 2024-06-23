@@ -32,7 +32,7 @@ if selected == "Home":
     st.write("##")
     col,img_col = st.columns(2)
     with col:
-        st.markdown("## Welcome to our app!")
+        st.markdown("## Welcome to Retention Radar Pro!")
         st.write("---")
         st.markdown("""Every company wants to increase its profit or revenue margin and customer retention is one key area industry players 
              focus their resources - **and we at Selenium Analytics are no different!!**""")
@@ -80,11 +80,16 @@ if selected == "About Us":
 
 if selected == "Upload":
         st.title("Explore")
-        st.write("##")
+        
         st.markdown("""
-                    ### With our powerful machine learning algorithms, you could also try to predict 
+                    ### With our three powerful machine learning algorithms trained with , you could also try to predict 
                     ### whether a customer will churn or not with you own dataset!""")
-        st.write("##")
+      
+        st.write("We use:")
+        st.markdown("""
+                    -  Catboost
+                    - Logistic Regression
+                    - SQB""")
         uploaded_file = st.file_uploader("Upload your file here")
         st.markdown("*Good to remember : Please rename your corresponding columns to match ours*")
 
