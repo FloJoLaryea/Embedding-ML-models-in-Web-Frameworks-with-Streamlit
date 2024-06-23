@@ -24,14 +24,6 @@ def models():
 catboost, log_regression,sgb = models()
 
 
-
-#model_components = load_ml_components()
-
-# load model components
-#catboost_model = model_components["catboost_model"]
-#logistic_regressor = model_components["log_regression"]
-#sgb_classifier = model_components["sgb_classifier"]
-
 # initialize the session state
 
 if "selected_model" not in st.session_state:
